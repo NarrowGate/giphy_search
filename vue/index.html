@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Giphy Search</title>
+  <script src="./js/vue.js"></script>
+ 
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/main.css">
+
+</head>
+<body class="text-center">
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column" id="giphyApp">
+    <main role="main" class="inner cover">
+      <h1 class="cover-heading">Giphy</h1>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+              <div class="input-group">
+                <input type="text" class="form-control mb-2 mr-sm-2" tabindex="0" placeholder="Search Giff"
+                  v-model="giphyQuery" 
+                  v-on:keyup.enter="searchGiphyHandler">
+                <button type="submit" class="btn btn-primary mb-2" tabindex="1"
+                  @click="searchGiphyHandler" 
+                  :class = "{'disabled': !isQueryExist}" 
+                  :disabled="!isQueryExist">Search</button>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="album py-5">
+        <div class="container">    
+          <div class="row" v-if="!serverError">
+            <div class="col-md-4 giff-tile" v-for="giff in giffs">
+              <div class="card mb-4 shadow-sm">
+              <img :src="giff.images.downsized_medium.url">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <small class="text-muted giff-title">{{giff.title}}</small>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" v-else>
+            <div class="col-md-12 ">
+              <div class="alert alert-danger giff-error" role="alert">
+                Something went wrong!
+              </div>              
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+<script src="./js/giphy-search.js"></script>
+</body>
+</html>
